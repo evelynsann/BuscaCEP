@@ -1,0 +1,60 @@
+#loadingOverlay {
+    /* As linhas abaixo garantem que o elemento ocupe 100% do espaço da tela */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Fundo branco semi-transparente */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Posiciona o spiner acima de todos os outros elementos HTML */
+    z-index: 9999;
+}
+
+.spinner-border {
+    /* Aumenta o tamanho do spinner */
+    width: 100px;
+    height: 100px;
+}
+
+body {
+    /* Altera a cor de fundo da página */
+    background-color: rgb(193, 145, 229);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+h1 {
+    font-family: "Playfair Display", serif;
+}
+
+ input[type="text"], select {
+    /* Altera a cor de fundo dos campos de texto (input)
+    e seletor de 'Estados' (select) */
+    /* 'Important' é necessário para forçar a substituição
+    das cores do seletor de 'Estados' (select) */
+    background-color: rgb(239, 183, 237) !important;
+    border: 1px solid rgb(225, 70, 242) !important;
+    color: rgb(182, 27, 238) !important;
+ }
+
+ input[type="text"]:disabled, select:disabled {
+    /* Altera o estilo dos campos desabilitados */
+    background-color: rgb(219, 190, 240) !important;
+    border: 1px solid rgb(219, 190, 240) !important;
+    color: rgb(219, 190, 240) !important;
+ }
+
+ input[type="text"]::placeholder {
+    /* Altera a cor do texto de campos que não possuem informações preenchidas. */
+    color: rgb(182, 27, 238);
+ }
+
+ label {
+    /* Altera a cor do rótulon dos campos */
+    color: rgb(255, 255, 255);
+ }
+
+ h1 {
+    /* Altera a cor da fonte da palavra "Formulário" */
+    color: rgb(182, 27, 238);
+ }
