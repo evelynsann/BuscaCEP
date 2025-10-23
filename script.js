@@ -17,17 +17,28 @@ const txt_cidade = document.querySelector("#cidade");
 // Procura pelo campo de "bairro" no documento HTML
 const txt_bairro = document.querySelector("#bairro");
 
+// Procura pelo campo de "complemento" no documento HTML
+const txt_complemento = document.querySelector("#complemento");
+
 // Procura pelo elemento de spinner 'Carregando' no documento HTML
 const loadingOverlay = document.querySelector("#loadingOverlay");
 
 // Procura pelo campo de "Estado" no documento HTML
 const slt_estado = document.querySelector("#estado");
 
+// Procura pelo elemento que contém a mensagem de erro de validação  do CEP.
+const err_cep = document.querySelector("#cep-erro");
+
 // ----------------------------------------------------------------------
 // 2. Funções de Lógica
 // ----------------------------------------------------------------------
 
 function consultaCEP() {
+    /* Limpa e habilita os campos caso tenham sido desabilitados.
+        Exemplo: Usúario digitou um CEP de uma cidade e depois o CEP de Dois Irmãos/RS.
+        Sem esta função, os campos não preencidos (Rua, etc.) continuam preenchidos com os dados anteriores. */
+        limpaCampos();
+
     // Lê o CEP digitado no campo "CEP" da página
     // para a variável 'cep'.
     let cep = txt_cep.value;
@@ -44,17 +55,12 @@ function consultaCEP() {
         // Onde "12345123" é o CEP (sem traço, apenas números).
         
         // Remove o "-" (traço) da variável 'cep'.
-        cep = cep.replace("-", "");
-        
-        /* Limpa e habilita os campos caso tenham sido desabilitados.
-        Exemplo: Usúario digitou um CEP de uma cidade e depois o CEP de Dois Irmãos/RS.
-        Sem esta função, os campos não preencidos (Rua, etc.) continuam preenchidos com os dados anteriores. */
-        limpaCampos();
+        cep = cep.replace("-", ""); 
         
         // Exibe o spinner de 'Carregando' antes de chamar a API.
         loadingOverlay.classList.add('d-flex');
         loadingOverlay.classList.remove('d-none')
-        
+
         fetch('https://viacep.com.br/ws/'+cep+'/json/')
         .then(function(response) {
             // Oculta o spinner de 'Carregando' ao receber a resposta da API.
@@ -95,6 +101,17 @@ function consultaCEP() {
                     slt_estado.disabled = true;
                 }
             }
+        })
+
+     .catch (error => {
+        // Oculta o spinner de 'Carregando' ao receber a proposta da API.
+        loadingOverlay.classList.add('d-none');
+        loadingOverlay.classList.remove('d-flex');
+
+        // Exibe a mensagem de erro abaixo do campo de CEP.
+        err_cep.innerHTML = "Falha na consulta ao CEP.\
+        <a href='#' onclick='consultaCEP()'>Tentar novamente?</a>";
+        txt_cep.classList.add("is-invalid");
         });
     }
 }
@@ -102,8 +119,10 @@ function consultaCEP() {
 function limpaCampos() {
     /* Limpa os valores atuais dos campos. */ 
     txt_rua.value = "";
+    txt_num.value = "";
     txt_cidade.value = "";
     txt_bairro.value = "";
+    txt_complemento.value = "";
     slt_estado.value = "";
     
     /* Reabilita os campos que por ventura possam ter sido desabilitados. */
